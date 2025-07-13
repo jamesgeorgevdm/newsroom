@@ -1,0 +1,18 @@
+{% extends 'news_room/base.html' %}
+{% block title %}Request Revisions{% endblock %}
+
+{% block content %}
+<div class="body-container">
+<h2>Request Revisions for: {{ article.title }}</h2>
+
+<p><strong>Author:</strong> {{ article.author.username }}</p>
+<p>{{ article.content }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="feedback">Feedback for Journalist:</label><br>
+    <textarea name="feedback" rows="6" cols="60" required></textarea><br><br>
+    <button type="submit">Send Feedback</button>
+</form>
+</div>
+{% endblock %}

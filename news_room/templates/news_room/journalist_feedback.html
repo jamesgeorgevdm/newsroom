@@ -1,0 +1,40 @@
+{% extends 'news_room/base.html' %}
+{% block title %}Article Feedback{% endblock %}
+
+{% block content %}
+<div class="body-container">
+<h2>My Submitted Articles & Editor Feedback</h2>
+
+{% for article in articles %}
+  <div>
+    <h3>{{ article.title }}</h3>
+    <p>{{ article.content }}</p>
+
+    <p><strong>Publisher:</strong> {{ article.publisher.name }}</p>
+    <p><strong>Status:</strong>
+      {% if article.approved %}
+        Approved
+      {% elif article.needs_revision %}
+        Needs Revisions
+      {% else %}
+        Pending Review
+      {% endif %}
+    </p>
+
+    <p><strong>Created at:</strong> {{ article.created_at|date:"Y-m-d H:i" }}</p>
+
+    {% if article.updated_at and article.updated_at != article.created_at %}
+      <p><strong>Last updated:</strong> {{ article.updated_at|date:"Y-m-d H:i" }}</p>
+    {% endif %}
+
+    {% if article.needs_revision %}
+      <p><strong>Editor's Feedback:</strong> {{ article.editor_feedback }}</p>
+      <a href="{% url 'edit_article' article.id %}">Edit and Resubmit</a>
+    {% endif %}
+  </div>
+  <hr>
+{% empty %}
+  <p>You haven't submitted any articles yet.</p>
+{% endfor %}
+</div>
+{% endblock %}

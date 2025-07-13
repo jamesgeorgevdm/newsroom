@@ -1,0 +1,20 @@
+{% extends 'news_room/base.html' %}
+{% block title %}Review Articles{% endblock %}
+{% block content %}
+<div class="body-container">
+<h2>Articles Awaiting Approval</h2>
+{% for article in articles %}
+  <div>
+    <h3>{{ article.title }}</h3>
+    <p>{{ article.content }}</p>
+    <small>By {{ article.author.username }} | {{ article.publisher.name }}</small><br>
+    <a href="{% url 'approve_article' article.id %}" class="review-button">Approve</a>
+    <a href="{% url 'request_revision' article.id %}" class="review-button">Request Revisions</a>
+
+  </div>
+  <hr>
+{% empty %}
+  <p>No articles pending approval.</p>
+{% endfor %}
+</div>
+{% endblock %}

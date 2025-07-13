@@ -1,0 +1,24 @@
+{% extends 'news_room/base.html' %}
+{% block title %}Create Newsletter{% endblock %}
+
+{% block content %}
+<div class="body-container">
+  <h2>Create Newsletter</h2>
+  <form method="post" class="newsletter-form">
+    {% csrf_token %}
+    <div class="form-field">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+    </div>
+    <div class="form-field">
+      {{ form.content.label_tag }}
+      {{ form.content }}
+    </div>
+    <div class="form-field">
+      {{ form.publisher.label_tag }}
+      {{ form.publisher }}
+    </div>
+    <button type="submit" class="review-button">Publish Newsletter</button>
+  </form>
+</div>
+{% endblock %}

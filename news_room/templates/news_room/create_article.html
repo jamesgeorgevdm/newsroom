@@ -1,0 +1,19 @@
+{% extends 'news_room/base.html' %}
+{% block title %}Create Article{% endblock %}
+{% block content %}
+<div class="body-container">
+<h2>Create New Article</h2>
+<form method="post">{% csrf_token %}
+  <input type="text" name="title" placeholder="Title" required><br><br>
+  <textarea name="description" rows="3" placeholder="Short Description" maxlength="300" required></textarea><br><br>
+  <textarea name="content" rows="6" placeholder="Full Article Content" required></textarea><br><br>
+  <label>Publisher:</label>
+  <select name="publisher_id">
+    {% for pub in publishers %}
+      <option value="{{ pub.id }}">{{ pub.name }}</option>
+    {% endfor %}
+  </select><br><br>
+  <button type="submit">Submit Article</button>
+</form>
+</div>
+{% endblock %}

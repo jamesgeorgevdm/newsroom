@@ -1,0 +1,33 @@
+{% extends 'news_room/base.html' %}
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+<div class="body-container">
+  <h2>{{ article.title }}</h2>
+  <p><strong>By:</strong> {{ article.author.username }} | <strong>Publisher:</strong> {{ article.publisher.name }}</p>
+  <p><em>Published: {{ article.created_at|date:"Y-m-d H:i" }}</em></p>
+  {% if article.updated_at and article.updated_at != article.created_at %}
+    <p><em>Updated: {{ article.updated_at|date:"Y-m-d H:i" }}</em></p>
+  {% endif %}
+  <hr>
+  <p>{{ article.content }}</p>
+
+  {% if request.user.is_authenticated and request.user.role == 'reader' %}
+  <div class="subscription-actions">
+    {% if article.publisher not in request.user.subscribed_publishers.all %}
+    <form method="post" action="{% url 'subscribe_publisher' article.publisher.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn-subscribe">Subscribe to {{ article.publisher.name }}</button>
+    </form>
+    {% endif %}
+
+    {% if article.author not in request.user.subscribed_journalists.all %}
+    <form method="post" action="{% url 'subscribe_journalist' article.author.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn-subscribe">Subscribe to {{ article.author.username }}</button>
+    </form>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

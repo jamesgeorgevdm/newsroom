@@ -1,0 +1,38 @@
+{% extends 'news_room/base.html' %}
+{% block title %}Directory{% endblock %}
+
+{% block content %}
+<div class="body-container directory-container">
+  <h2>Directory</h2>
+  <div class="directory-columns">
+    <div class="directory-column">
+      <h3>Journalists</h3>
+      <ul>
+        {% for journalist in journalists %}
+          <li>
+            <strong>{{ journalist.username }}</strong><br>
+            Articles published: {{ journalist.published_articles.count }}<br>
+            Subscribers: {{ journalist.reader_subscribers.count }}<br>
+          </li>
+        {% empty %}
+          <li>No journalists found.</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="directory-column">
+      <h3>Publishers</h3>
+      <ul>
+        {% for publisher in publishers %}
+          <li>
+            <strong>{{ publisher.name }}</strong><br>
+            Journalists: {{ publisher.journalists.count }}<br>
+            Subscribers: {{ publisher.subscribed_readers.count }}<br>
+          </li>
+        {% empty %}
+          <li>No publishers found.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

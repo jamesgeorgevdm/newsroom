@@ -1,0 +1,16 @@
+{% extends 'news_room/base.html' %}
+{% block title %}Create Publisher{% endblock %}
+
+{% block content %}
+<div class="body-container">
+  <h2>Create Publisher</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Publisher</button>
+  </form>
+
+  <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+</div>
+{% endblock %}

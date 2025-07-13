@@ -1,0 +1,273 @@
+
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    color: #222;
+}
+
+nav {
+    background-color: #0a1f44;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 6rem; 
+    border-bottom: 2px solid #e2e2e2;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-links a {
+    background-color: white;
+    color: #0a1f44;
+    padding: 0.5rem 1rem;
+    border: 1px solid #0a1f44;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-links a:hover {
+    background-color: #0a1f44;
+    color: white;
+    border-color: #0a1f44;
+}
+
+.welcome-text {
+    margin-left: 5rem;
+    font-style: italic;
+    color: #ffffff;
+}
+
+.body-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+h2 {
+    color: #0a1f44;
+    border-bottom: 2px solid #ff3333;
+    padding-bottom: 0.3rem;
+    margin-top: 2rem;
+}
+
+form {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+form input[type="text"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #ff3333;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+form button:hover {
+    background-color: #cc0000;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 2rem 0;
+}
+
+div.article {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    background-color: #fafafa;
+}
+
+small, p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.navy-button {
+    display: inline-block;
+    background-color: #002c5f;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.navy-button:hover {
+    background-color: #001f3f;
+    color: #ffffff;
+}
+
+a.action-link {
+    color: #0a1f44;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+a.action-link:hover {
+    color: #ff3333;
+}
+
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.article-card h3,
+.article-card h4 {
+    font-family: 'Georgia', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #0a1f44;
+    border-left: 4px solid #ff3333;
+    padding-left: 1rem;
+    transition: color 0.2s;
+}
+
+.article-card h3:hover,
+.article-card h4:hover {
+    color: #c1121f;
+}
+
+.article-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    transition: box-shadow 0.2s, padding 0.2s;
+}
+
+.article-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 2rem; 
+}
+
+.review-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    background-color: #c1121f;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.review-button:hover {
+    background-color: #a00e1a;
+    color: #fff;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    background-color: #c1121f;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.read-more:hover {
+    background-color: #a00e1a;
+}
+
+.subscription-actions {
+  margin-top: 10px;
+  padding: 8px;
+  border-top: 1px solid #ccc;
+}
+
+.subscription-actions form {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.subscription-actions button {
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.subscription-actions button:hover {
+  background-color: #cc0000;
+}
+
+.directory-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.directory-columns {
+  display: flex;
+  gap: 2rem;
+}
+
+.directory-column {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.directory-column h3 {
+  color: navy;
+  border-bottom: 2px solid red;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.directory-column ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.directory-column li {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #333;
+}
