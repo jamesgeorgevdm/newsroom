@@ -103,4 +103,4 @@ git log --oneline --graph --decorate
 
 🐳 Docker Hub: jamesgeorgevdm/newsroom
 
-🐙 GitHub Repo: 
+🐙 GitHub Repo: https://github.com/jamesgeorgevdm/newsroom
