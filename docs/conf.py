@@ -11,7 +11,8 @@ author = 'James van der Merwe'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-    'sphinx_rtd_theme'
+    'sphinx_rtd_theme',
+    'sphinx.ext.apidoc',
 ]
 
 templates_path = ['_templates']
@@ -22,7 +23,8 @@ import os
 import sys
 import django
 
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('../newsroom'))
+sys.path.insert(0, os.path.abspath('../news_room'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'newsroom.settings'
 django.setup()
 
