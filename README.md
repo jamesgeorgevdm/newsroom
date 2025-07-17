@@ -49,11 +49,11 @@ python manage.py runserver
 ## Docker Setup
 bash
 # Pull and run the container
-docker pull jamesgeorgevdm/newsroom-app
-docker run -p 8000:8000 --name newsroom-app jamesgeorgevdm/newsroom-app
+docker pull jamesgeorgevdm/newsroom
+docker run -p 8000:8000 --name newsroom jamesgeorgevdm/newsroom
 
 # Apply database migrations inside container
-docker exec newsroom-app python manage.py migrate
+docker exec newsroom python manage.py migrate
 Visit: http://localhost:8000 Click “Open Port” on Docker Playground to preview externally.
 
 ## Database Configuration
@@ -101,6 +101,6 @@ git log --oneline --graph --decorate
 ## External Links
 
 
-🐳 Docker Hub: jamesgeorgevdm/newsroom-app
+🐳 Docker Hub: jamesgeorgevdm/newsroom
 
 🐙 GitHub Repo: 
