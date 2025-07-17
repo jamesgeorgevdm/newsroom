@@ -58,7 +58,7 @@ Visit: http://localhost:8000 Click “Open Port” on Docker Playground to previ
 
 ## Database Configuration
 
-Please see the provided sensitive.txt file which has a pastable database configuration code. Paste this into settings.py. 
+Please see the provided sensitive.txt file which has a pastable segment for a .env file.  
 
 
 ## Documentation
