@@ -1,4 +1,4 @@
-news_room
+Modules
 =========
 
 .. toctree::
