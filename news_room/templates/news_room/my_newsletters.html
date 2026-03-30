@@ -1,0 +1,32 @@
+{% extends 'news_room/base.html' %}
+{% block title %}My Newsletters{% endblock %}
+
+{% block content %}
+<div class="body-container">
+  <h2>My Newsletters</h2>
+
+  {% for newsletter in newsletters %}
+    <div class="article-card">
+      <h3>
+        <a href="{% url 'view_newsletter' newsletter.id %}">
+          {{ newsletter.title }}
+        </a>
+      </h3>
+
+      <p>{{ newsletter.content|truncatechars:100 }}</p>
+      
+      <p>
+        <strong>Published at:</strong>
+        {{ newsletter.created_at|date:"Y-m-d H:i" }}
+      </p>
+
+      <a class="read-more" href="{% url 'view_newsletter' newsletter.id %}">
+        Read More
+      </a>
+    </div>
+    <hr>
+  {% empty %}
+    <p>You haven't published any newsletters yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

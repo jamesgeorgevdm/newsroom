@@ -1,0 +1,31 @@
+{% extends 'news_room/base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="body-container">
+  <h2>Dashboard</h2>
+  <p>You are logged in as {{ request.user.username }} ({{ request.user.role }})</p>
+
+  {% if request.user.role == 'reader' or request.user.role == 'journalist' %}
+    <h3>Approved Articles</h3>
+    <div class="article-grid">
+      {% for article in articles %}
+        <div class="article-card">
+          <h4>{{ article.title }}</h4>
+          <p>{{ article.description }}</p>
+          <a href="{% url 'view_article' article.id %}" class="read-more">Read Full Article</a>
+        </div>
+      {% empty %}
+        <p>No articles yet.</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if request.user.role == 'editor' %}
+    <h3>Articles Awaiting Your Review</h3>
+    <p>
+      <a href="{% url 'review_articles' %}" class="navy-button">Go to Articles Awaiting Approval and Revision</a>
+    </p>
+  {% endif %}
+</div>
+{% endblock %}

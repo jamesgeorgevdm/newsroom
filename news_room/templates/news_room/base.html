@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+<head>
+    <title>{% block title %}Newsroom{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'news_room/styles.css' %}">
+</head>
+<body>
+    <nav>
+  <div class="brand">NewsRoom</div>
+  <div class="nav-links">
+    <a href="{% url 'dashboard' %}">Home</a>
+    <a href="{% url 'article_list' %}">Articles</a>
+    <a href="{% url 'newsletter_list' %}">Newsletters</a>
+
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'directory' %}">Directory</a>
+
+      {% if request.user.role == 'journalist' %}
+        <a href="{% url 'create_article' %}">Write Article</a>
+        <a href="{% url 'journalist_feedback' %}">Article Feedback</a>
+        <a href="{% url 'create_newsletter' %}">New Newsletter</a>
+        <a href="{% url 'my_newsletters' %}">My Newsletters</a>
+
+      {% elif request.user.role == 'editor' %}
+        <a href="{% url 'review_articles' %}">Review Articles</a>
+        <a href="{% url 'create_publisher' %}">Create Publisher</a>
+      {% endif %}
+
+      <span class="welcome-text">Welcome, {{ request.user.username }}</span>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+  </div>
+</nav>
+
+
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
