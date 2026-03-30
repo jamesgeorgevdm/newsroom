@@ -8,11 +8,11 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Move BASE_DIR up
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Point load_dotenv to the .env file in the root
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -26,6 +26,7 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    '0.0.0.0',
     os.environ.get('DJANGO_ALLOWED_HOST', ''),
 ]
 # Application definition
@@ -78,14 +79,13 @@ WSGI_APPLICATION = 'newsroom.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE'),
-        'USER': os.environ.get('MYSQL_USER'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
-        'HOST': os.environ.get('MYSQL_HOST', 'localhost'),
-        'PORT': os.environ.get('MYSQL_PORT'),
+        'NAME': os.environ.get('DB_NAME', 'newsroom_db'),
+        'USER': os.environ.get('DB_USER', 'james'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'your_password_here'),
+        'HOST': os.environ.get('DB_HOST', 'db'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
-
 
 
 AUTH_USER_MODEL = 'news_room.CustomUser'
