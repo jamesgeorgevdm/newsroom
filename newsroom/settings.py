@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     os.environ.get('DJANGO_ALLOWED_HOST', ''),
 ]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -76,16 +77,30 @@ WSGI_APPLICATION = 'newsroom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME', 'newsroom_db'),
-        'USER': os.environ.get('DB_USER', 'james'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'your_password_here'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+USE_MYSQL = os.environ.get('DB_NAME') is not None
+
+if USE_MYSQL:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('DB_NAME', 'newsroom_db'),
+            'USER': os.environ.get('DB_USER', 'james'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', 'your_password_here'),
+            'HOST': os.environ.get('DB_HOST', 'db'),
+            'PORT': os.environ.get('DB_PORT', '3306'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
+        }
     }
-}
+else:
+    # Default to SQLite for local 'venv' setups without Docker
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 AUTH_USER_MODEL = 'news_room.CustomUser'

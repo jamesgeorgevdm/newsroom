@@ -17,10 +17,31 @@ A multi-role news publishing platform built with Django. This capstone project d
 
 ## Example .env File
 
-To protect secrets, this project includes a temporary file called `sensitive.txt`, which contains example environment variables that must be copied into a `.env` file **before running the app**.  
+To protect secrets, this project includes a temporary file called `.env.example`, which contains example environment variables that must be copied into a `.env` file **before running the app**.  
 This file should **not be committed to GitHub**, and exists only for evaluation purposes.
 
 ---
+
+### Using docker-compose (Recommended)
+
+```bash
+# 0. Create .env from template 
+cp .env.example .env
+
+# 1. Build & start services in the background
+docker-compose up --build -d
+
+# 2. Create database tables (CRITICAL STEP)
+docker-compose exec web python manage.py migrate
+
+# 3. Create an admin account to test editorial roles
+docker-compose exec web python manage.py createsuperuser
+
+# 4. Open in browser:
+#    http://localhost:8000
+
+---
+```
 
 ## Local Setup (venv)
 
@@ -40,7 +61,7 @@ venv\Scripts\activate
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# 4. Create your .env file and copy the contents of sensitive.txt or create your own variables
+# 4. Create your .env file and copy the contents of .env.example
 
 # 5. Apply migrations & collect static files
 python manage.py migrate
@@ -69,7 +90,7 @@ docker run -d \
   -e MYSQL_PASSWORD=newspassword \
   mariadb:latest
 
-Ensure the environment variables (`MYSQL_*`, `DJANGO_*`, etc.) match those in your `.env` file or `sensitive.txt`
+Ensure the environment variables (`MYSQL_*`, `DJANGO_*`, etc.) match those in your `.env` file
 
 # 2. Build Django image
 docker build -t jamesgeorgevdm/newsroom .
@@ -96,27 +117,20 @@ docker run -d \
 ### Using docker-compose
 
 ```bash
-# 1. Ensure .env is in project root
-# 2. Build & start services
+# 1. Build & start services in the background
 docker-compose up --build -d
 
-# 3. Check service status
-docker-compose ps
+# 2. Create database tables (CRITICAL STEP)
+docker-compose exec web python manage.py migrate
+
+# 3. Create an admin account to test editorial roles
+docker-compose exec web python manage.py createsuperuser
 
 # 4. Open in browser:
 #    http://localhost:8000
+
+---
 ```
-
----
-
-# Copy the example variables to a proper .env file:
-- cp sensitive.txt .env
-
-Ensure the .env file remains in your project root directory so Docker and Django can access it.
-
-You may edit values inside sensitive.txt to match your local or production environment if needed.
-
----
 
 ## .gitignore Recommendations
 
