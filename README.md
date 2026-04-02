@@ -22,97 +22,45 @@ This file should **not be committed to GitHub**, and exists only for evaluation 
 
 ---
 
-### Using docker-compose (Recommended)
+## Setup Instructions
+
+### Please input the following commands into your terminal:
 
 ```bash
-# 0. Create .env from template 
-cp .env.example .env
-
-# 1. Build & start services in the background
-docker-compose up --build -d
-
-# 2. Create database tables (CRITICAL STEP)
-docker-compose exec web python manage.py migrate
-
-# 3. Create an admin account to test editorial roles
-docker-compose exec web python manage.py createsuperuser
-
-# 4. Open in browser:
-#    http://localhost:8000
-
----
-```
-
-## Local Setup (venv)
-
-```bash
-# 1. Clone & enter project
 git clone https://github.com/jamesgeorgevdm/newsroom.git
 cd newsroom
+cp .env.example .env
 
-# 2. Create & activate virtualenv
-python -m venv venv
-# macOS/Linux
-source venv/bin/activate
-# Windows
-venv\Scripts\activate
+# Ensure DB_HOST=db is set in your .env file for Docker networking
 
-# 3. Install dependencies
-pip install --upgrade pip
-pip install -r requirements.txt
-
-# 4. Create your .env file and copy the contents of .env.example
-
-# 5. Apply migrations & collect static files
-python manage.py migrate
-python manage.py collectstatic --noinput
-
-# 6. Run the development server
-python manage.py runserver
-
-# 7. Open in browser
-#    http://localhost:8000
 ```
 
----
-
-## Docker Setup
-
-### Manual Containers
+### Please make sure Docker Desktop is running successfully before beginning Docker initialization:
 
 ```bash
-# 1. Start MariaDB container
-docker run -d \
-  --name newsroom-db \
-  -e MYSQL_ROOT_PASSWORD=your_password \
-  -e MYSQL_DATABASE=newsroom \
-  -e MYSQL_USER=newsuser \
-  -e MYSQL_PASSWORD=newspassword \
-  mariadb:latest
-
-Ensure the environment variables (`MYSQL_*`, `DJANGO_*`, etc.) match those in your `.env` file
-
-# 2. Build Django image
-docker build -t jamesgeorgevdm/newsroom .
-
-# 3. Run Django container linked to the DB
-docker run -d \
-  -p 8000:8000 \
-  --name newsroom \
-  --link newsroom-db:db \
-  -e SECRET_KEY=your_secret_key \
-  -e DEBUG=True \
-  -e DJANGO_ALLOWED_HOST=localhost \
-  -e MYSQL_DATABASE=newsroom \
-  -e MYSQL_USER=newsuser \
-  -e MYSQL_PASSWORD=newspassword \
-  -e MYSQL_HOST=db \
-  -e MYSQL_PORT=3306 \
-  your-dockerhub-username/newsroom:latest
-
-# 4. Open in browser:
-#    http://localhost:8000
+docker compose up -d
 ```
+#### On the very first run, the MySQL container requires ~20 seconds to initialize its internal engine. You may initially see a django.db.utils.OperationalError in the logs - this is expected.
+#### If the server doesn't catch up automatically, simply run:
+
+```bash
+docker compose restart web
+```
+### Once the containers are running, execute these commands:
+
+```bash
+# Apply database migrations
+docker compose exec web python manage.py migrate
+
+# Collect static files (CSS/JS)
+docker compose exec web python manage.py collectstatic --noinput
+
+# Create your admin credentials
+docker compose exec web python manage.py createsuperuser
+```
+## Access the project:
+- Frontend: http://localhost:8000
+- Admin Dashboard: http://localhost:8000/admin
 
 ## .gitignore Recommendations
 
