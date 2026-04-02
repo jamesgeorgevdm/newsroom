@@ -74,37 +74,37 @@ TEMPLATES = [
 WSGI_APPLICATION = 'newsroom.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-USE_MYSQL = os.environ.get('DB_NAME') is not None
-
-if USE_MYSQL:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ.get('DB_NAME', 'newsroom_db'),
-            'USER': os.environ.get('DB_USER', 'james'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', 'your_password_here'),
-            'HOST': os.environ.get('DB_HOST', 'db'),
-            'PORT': os.environ.get('DB_PORT', '3306'),
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            },
+if os.environ.get('DB_HOST') == 'db':
+    try:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': os.environ.get('DB_NAME'),
+                'USER': os.environ.get('DB_USER'),
+                'PASSWORD': os.environ.get('DB_PASSWORD'),
+                'HOST': 'db',
+                'PORT': '3306',
+            }
         }
-    }
+    except Exception:
+        # Emergency fallback if MySQL config exists but fails
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            }
+        }
 else:
-    # Default to SQLite for local 'venv' setups without Docker
+    # Standard Local Development
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
-
-AUTH_USER_MODEL = 'news_room.CustomUser'
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -122,6 +122,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'news_room.CustomUser'
 
 
 # Internationalization

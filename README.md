@@ -114,24 +114,6 @@ docker run -d \
 #    http://localhost:8000
 ```
 
-### Using docker-compose
-
-```bash
-# 1. Build & start services in the background
-docker-compose up --build -d
-
-# 2. Create database tables (CRITICAL STEP)
-docker-compose exec web python manage.py migrate
-
-# 3. Create an admin account to test editorial roles
-docker-compose exec web python manage.py createsuperuser
-
-# 4. Open in browser:
-#    http://localhost:8000
-
----
-```
-
 ## .gitignore Recommendations
 
 ```
@@ -171,5 +153,5 @@ git branch --merged
 
 ## External Links
 
-- Docker Hub: [https://hub.docker.com/r/your-dockerhub-username/newsroom](https://hub.docker.com/r/your-dockerhub-username/newsroom)  
-- GitHub Repo: [https://github.com/yourusername/newsroom](https://github.com/yourusername/newsroom)
+- Docker Hub: [https://hub.docker.com/r/jamesgeorgevdm/newsroom](https://hub.docker.com/r/jamesgeorgevdm/newsroom)  
+- GitHub Repo: [https://github.com/jamesgeorgevdm/newsroom](https://github.com/jamesgeorgevdm/newsroom)
