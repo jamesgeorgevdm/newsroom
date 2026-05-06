@@ -86,20 +86,4 @@ open build/html/index.html
 
 ---
 
-## Git Branch Workflow
 
-- `main` – Production-ready code  
-- `container` – Docker tweaks  
-- `docs` – Sphinx documentation
-
-```bash
-git branch
-git branch --merged
-```
-
----
-
-## External Links
-
-- Docker Hub: [https://hub.docker.com/r/jamesgeorgevdm/newsroom](https://hub.docker.com/r/jamesgeorgevdm/newsroom)  
-- GitHub Repo: [https://github.com/jamesgeorgevdm/newsroom](https://github.com/jamesgeorgevdm/newsroom)
