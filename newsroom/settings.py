@@ -45,6 +45,8 @@ if os.environ.get('RENDER_EXTERNAL_HOSTNAME'):
     csrf_trusted_origins.add(f"https://{os.environ['RENDER_EXTERNAL_HOSTNAME']}")
 CSRF_TRUSTED_ORIGINS = sorted(csrf_trusted_origins)
 
+SITE_URL = os.environ.get('SITE_URL', 'http://127.0.0.1:8000').rstrip('/')
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -160,6 +162,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'noreply@newsroomonline.onrender.com')
 
 
 # Token validation
@@ -181,9 +184,9 @@ X_ACCESS_TOKEN_SECRET = os.environ.get('X_ACCESS_TOKEN_SECRET')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

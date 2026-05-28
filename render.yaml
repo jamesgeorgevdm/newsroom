@@ -1,16 +1,19 @@
 services:
   - type: web
-    name: newsroom
+    name: newsroomonline
     runtime: docker
     plan: free
     autoDeploy: true
     healthCheckPath: /
+    preDeployCommand: python manage.py migrate
     envVars:
       - key: DEBUG
         value: "False"
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        value: ".onrender.com"
+        value: "newsroomonline.onrender.com"
       - key: CSRF_TRUSTED_ORIGINS
-        value: "https://newsroom.onrender.com"
+        value: "https://newsroomonline.onrender.com"
+      - key: SITE_URL
+        value: "https://newsroomonline.onrender.com"

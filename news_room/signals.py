@@ -22,10 +22,11 @@ def notify_on_approval(sender, instance, created, **kwargs):
     - Triggered only on update (not creation) where approved and not flagged for revision.
     """
     if not created and instance.approved and not instance.needs_revision:
+        article_url = f"{settings.SITE_URL}/article/{instance.id}/"
         subject = f"New Article: {instance.title}"
         message = (
             f"{instance.description}\n\n"
-            f"Read more at: http://127.0.0.1:8000/articles/{instance.id}/"
+            f"Read more at: {article_url}"
         )
         from_email = settings.DEFAULT_FROM_EMAIL
 
@@ -47,7 +48,7 @@ def notify_on_approval(sender, instance, created, **kwargs):
             )
             tweet = {
                 "text": f"{instance.title} by {instance.author.username}\n"
-                        f"Read: http://127.0.0.1:8000/articles/{instance.id}/"
+                        f"Read: {article_url}"
             }
             response = twitter.post("https://api.twitter.com/2/tweets", json=tweet)
             response.raise_for_status()
