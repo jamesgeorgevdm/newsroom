@@ -6,6 +6,7 @@ This file contains all the settings configurations for Django apps.
 
 from pathlib import Path
 import os
+import dj_database_url
 from dotenv import load_dotenv
 
 # Move BASE_DIR up
@@ -18,17 +19,31 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-dev-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '0.0.0.0',
-    os.environ.get('DJANGO_ALLOWED_HOST', ''),
-]
+allowed_hosts = {'localhost', '127.0.0.1', '0.0.0.0'}
+if os.environ.get('DJANGO_ALLOWED_HOST'):
+    allowed_hosts.add(os.environ['DJANGO_ALLOWED_HOST'])
+if os.environ.get('RENDER_EXTERNAL_HOSTNAME'):
+    allowed_hosts.add(os.environ['RENDER_EXTERNAL_HOSTNAME'])
+for host in os.environ.get('ALLOWED_HOSTS', '').split(','):
+    host = host.strip()
+    if host:
+        allowed_hosts.add(host)
+ALLOWED_HOSTS = sorted(allowed_hosts)
+
+csrf_trusted_origins = set()
+if os.environ.get('CSRF_TRUSTED_ORIGINS'):
+    for origin in os.environ['CSRF_TRUSTED_ORIGINS'].split(','):
+        origin = origin.strip()
+        if origin:
+            csrf_trusted_origins.add(origin)
+if os.environ.get('RENDER_EXTERNAL_HOSTNAME'):
+    csrf_trusted_origins.add(f"https://{os.environ['RENDER_EXTERNAL_HOSTNAME']}")
+CSRF_TRUSTED_ORIGINS = sorted(csrf_trusted_origins)
 
 # Application definition
 
@@ -46,6 +61,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,28 +93,26 @@ WSGI_APPLICATION = 'newsroom.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-if os.environ.get('DB_HOST') == 'db':
-    try:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.mysql',
-                'NAME': os.environ.get('DB_NAME'),
-                'USER': os.environ.get('DB_USER'),
-                'PASSWORD': os.environ.get('DB_PASSWORD'),
-                'HOST': 'db',
-                'PORT': '3306',
-            }
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ['DATABASE_URL'],
+            conn_max_age=600,
+            ssl_require=not DEBUG,
+        )
+    }
+elif os.environ.get('DB_HOST') and os.environ.get('DB_NAME'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_HOST'),
+            'PORT': os.environ.get('DB_PORT', '3306'),
         }
-    except Exception:
-        # Emergency fallback if MySQL config exists but fails
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
-            }
-        }
+    }
 else:
-    # Standard Local Development
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -169,6 +183,13 @@ X_ACCESS_TOKEN_SECRET = os.environ.get('X_ACCESS_TOKEN_SECRET')
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 # Custom login system
 LOGIN_URL = '/login/'
