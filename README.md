@@ -11,7 +11,8 @@ A multi-role news publishing platform built with Django. This capstone project d
 - Automated tweets and email notifications on publish  
 - Secure token-based API via Django REST Framework  
 - Custom user model and editorial feedback loop  
-- Containerized deployment with Docker & docker-compose  
+- Containerized deployment with Docker & docker-compose
+- **Available at:** [Newsroom Online](https://newsroomonline.onrender.com/)
 
 ---
 
