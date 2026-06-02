@@ -1,25 +1,32 @@
 # Newsroom App (Django)
 
-A multi-role news publishing platform built with Django. This capstone project demonstrates full-stack backend development, secure REST APIs, containerization, automated publishing, editorial workflows, and professional documentation.
+A multi-role news publishing platform built with Django. This capstone project demonstrates full-stack backend development, secure REST APIs, containerization, automated publishing pipelines, editorial workflows, and professional documentation.
+
+## Features
+* **Role-Based Workflows:** Distinct permissions and custom dashboards for Readers, Journalists, and Editors.
+* **Modern Newsroom UI:** Dynamic, responsive interface for articles, newsletters, and an editorial feedback loop.
+* **Automated Pipelines:** Integrated background actions for automated email notifications and tweet dispatching upon article publication.
+* **Secure REST API:** Token-based API architecture built via Django REST Framework.
+* **Production Optimized:** Configured with WhiteNoise for efficient static file serving and Gunicorn as the WSGI server.
+* **Containerized Deployment:** Entire ecosystem packaged with Docker & docker-compose for deterministic environments.
+
+### Tech Stack
+* **Backend Framework:** Django 5.2.3 & Django REST Framework 3.16.0
+* **Databases Supported:** Production-ready configuration for PostgreSQL / MariaDB (via `dj-database-url`)
+* **Deployment & WSGI:** Docker, Gunicorn 22.0, WhiteNoise
 
 ---
 
-## Features
-
-- Modern newsroom-style interface for articles and newsletters  
-- Role-based permissions (Readers, Journalists, Editors)  
-- Automated tweets and email notifications on publish  
-- Secure token-based API via Django REST Framework  
-- Custom user model and editorial feedback loop  
-- Containerized deployment with Docker & docker-compose
-- **Available at:** [Newsroom Online](https://newsroomonline.onrender.com/)
+## Live Demo
+Available at: [Newsroom Online](https://newsroomonline.onrender.com/)  
+*(Note: Hosted on a free instance tier. If the link is idle, please allow 60–90 seconds for the server to spin up.)*
 
 ---
 
 ## Example .env File
+To protect production secrets, this project utilizes environment variables. A template file called `.env.example` is included in the repository. This must be copied to a local `.env` file and populated before initializing the application.
 
-To protect secrets, this project includes a temporary file called `.env.example`, which contains example environment variables that must be copied into a `.env` file **before running the app**.  
-This file should **not be committed to GitHub**, and exists only for evaluation purposes.
+*This file contains sensitive credentials and should never be committed to source control.*
 
 ---
 
