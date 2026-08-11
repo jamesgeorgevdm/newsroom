@@ -31,11 +31,16 @@ class SignalsTests(TestCase):
             needs_revision=False
         )
 
-    @patch('news_room.signals.requests.post')
-    def test_tweet_posted_on_approval(self, mock_post):
+    @patch('news_room.signals.OAuth1Session')
+    def test_tweet_posted_on_approval(self, mock_oauth_session):
+        mock_client = mock_oauth_session.return_value
+        mock_response = mock_client.post.return_value
+        mock_response.raise_for_status.return_value = None
+
         self.article.approved = True
         self.article.save()  # Triggers post_save signal
-        mock_post.assert_called_once()
+
+        mock_client.post.assert_called_once()
 
     def test_email_sent_on_approval(self):
         self.article.approved = True

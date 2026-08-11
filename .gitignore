@@ -5,6 +5,7 @@ __pycache__/
 *.pyd
 env/
 venv/
+.venv-ci/
 *.sqlite3
 
 # Django static/media
